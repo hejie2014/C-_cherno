@@ -4,30 +4,30 @@
 
 using namespace std;
 
-int main()
-{
-    string s = "2125/12/18";
-    istringstream iss(s);
-    int y, m, d;
-    char ch;
-
-    iss >> y;
-    cout << "读取年份: " << y << endl;
-
-    iss >> ch;
-    cout << "读取第一个字符: '" << ch << "'" << endl;
-
-    iss >> m;
-    cout << "读取月份: " << m << endl;
-
-    iss >> ch;  // 这里会出错！
-    cout << "读取第二个字符: '" << ch << "'" << endl;
-
-    iss >> d;
-    cout << "读取日期: " << d << endl;
-	cout << y << " " << m << " " << d << endl;
-
-}
+//int main()
+//{
+//    string s = "2125/12/18";
+//    istringstream iss(s);
+//    int y, m, d;
+//    char ch;
+//
+//    iss >> y;
+//    cout << "读取年份: " << y << endl;
+//
+//    iss >> ch;
+//    cout << "读取第一个字符: '" << ch << "'" << endl;
+//
+//    iss >> m;
+//    cout << "读取月份: " << m << endl;
+//
+//    iss >> ch;  // 这里会出错！
+//    cout << "读取第二个字符: '" << ch << "'" << endl;
+//
+//    iss >> d;
+//    cout << "读取日期: " << d << endl;
+//	cout << y << " " << m << " " << d << endl;
+//
+//}
 
 
 

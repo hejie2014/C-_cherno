@@ -123,9 +123,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="accounting.h" />
     <ClInclude Include="date.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="accounting.cpp" />
+    <ClCompile Include="accounting_test.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="dateTest.cpp" />
   </ItemGroup>
