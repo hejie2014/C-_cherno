@@ -8,12 +8,27 @@ using namespace std;
 // 默认的构造函数，初始化为当前日期
 Date::Date() {
 	time_t current = time(NULL);
-	struct tm* nowTime = localtime(&current);
+	struct tm nowTime; // 1. 在栈上分配一个具体的结构体，而不是指针
 
-	m_year = nowTime->tm_year + 1900;
+	//struct tm* nowTime = localtime(&current);
+	localtime_s(&nowTime, &current);
+	m_year = nowTime.tm_year + 1900;
+	m_month = nowTime.tm_mon + 1;
+	m_day = nowTime.tm_mday;
+	/*m_year = nowTime->tm_year + 1900;
 	m_month = nowTime->tm_mon + 1;
-	m_day = nowTime->tm_mday;
-
+	m_day = nowTime->tm_mday;*/
+	/*
+	localtime 和 localtime_s 的区别在于谁负责提供内存（房子）：
+localtime（旧版）：
+	它自己内部有一个静态的房子（static struct tm）。
+	它把数据写进去，然后把**钥匙（指针）**交给你。
+	所以你定义 struct tm* p 去接这个钥匙是对的。
+localtime_s（新版安全版）：
+	它不负责提供房子。它要求你必须自己先盖好一个房子（在栈上分配内存）。
+	然后你把房子的**地址（指针）**告诉它，它才会进去把数据填好。
+	因为你只定义了 struct tm* nowTime 而没有初始化，这个指针指向的是随机的内存区域（也就是你没盖房子，只拿了个写着随机地址的门牌号），函数试图往这个随机地址写数据，程序就会崩溃（Access Violation）或报错“使用了未初始化的局部变量”。
+	*/
 }
 /*
 // 或者解决方案2：使用this指针
@@ -104,6 +119,7 @@ int Date::day_of_week() const {
 
 	// (y + (y/4) - (y/100) + (y/400) + (13*m + 8)/5 + d) % 7; 星期日~星期六（0~6）
 	return f % 7; // 0=Saturday, 1=Sunday, ..., 6=Friday
+	//return  (y + (y / 4) - (y / 100) + (y / 400) + (13 * m + 8) / 5 + m_day) % 7;
 }
 
 
@@ -117,10 +133,11 @@ ostream& operator<<(ostream& os, const Date& date)
 istream& operator>>(istream& is, Date& date)
 {
 	string dateStr;
-	is >> dateStr;
+	is >> dateStr; //首先从输入流中读取一段不含空格的字符串。例如用户输入 2023-11-22，整个字符串被读入 dateStr
 	int year, month, day;
 	char dash1, dash2; // 用于读取分隔符 '-'
-	istringstream iss(dateStr);
+	istringstream iss(dateStr);//它创建了一个“字符串流” iss，内容就是刚才读到的 dateStr
+	//     这样做的好处是我们可以像操作 cin 一样操作这个字符串，从中提取数字和字符，而不影响主输入流 is 后面的内容。
 	iss >> year >> dash1 >> month >> dash2 >> day;
 	if (iss && dash1 == '-' && dash2 == '-') {
 		date = Date(year, month, day);
@@ -130,3 +147,16 @@ istream& operator>>(istream& is, Date& date)
 	}
 	return is;
 }
+/*
+. 输入处理方式不同
+方式一（字符串方式）：
+is >> dateStr 读取直到遇到空格、制表符或换行
+然后只在dateStr内部解析，不影响主输入流后续内容
+方式二（直接方式）：
+直接从主输入流读取，会影响后续的输入操作
+优点：
+更好的隔离性：解析错误不会污染主输入流
+更清晰的错误处理：可以精确控制错误状态
+调试友好：可以查看完整的输入字符串
+灵活性：可以添加更复杂的解析逻辑
+*/

@@ -23,5 +23,13 @@
     <ClCompile Include="date.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="dateTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="file.md">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
