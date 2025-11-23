@@ -12,7 +12,7 @@ private:
 
 public:
 	// 构造函数
-	Accounting(const std::string& name, long amnt, int y, int m, int d);
+	Accounting(const std::string& name, long amnt, const Date& bd);
 	// 获取信息的函数，注意使用const修饰，不修改成员变量
 	std::string getName() const { return full_name; }
 	long getAsset() const { return crnt_asset; }

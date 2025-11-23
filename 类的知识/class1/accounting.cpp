@@ -5,8 +5,8 @@
 using namespace std;
 
 // ¹¹Ôìº¯Êý
-Accounting::Accounting(const string& name, long amnt, int y, int m, int d)
-	: full_name(name), crnt_asset(amnt), birth(y, m, d)
+Accounting::Accounting(const string& name, long amnt, const Date& bd)
+	: full_name(name), crnt_asset(amnt), birth(bd)
 {
 }
 
