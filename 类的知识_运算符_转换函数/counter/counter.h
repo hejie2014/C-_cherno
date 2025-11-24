@@ -23,8 +23,12 @@ public:
 			std::cout << "Counter cannot go below zero." << std::endl;
 	}
 	//获取计数值
-	unsigned int getCount() const
+	operator unsigned int() const
 	{
 		return count;
 	}
+	/*unsigned int getCount() const
+	{
+		return count;
+	}*/
 };
